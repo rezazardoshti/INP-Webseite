@@ -3,6 +3,8 @@ from .models import Service
 
 
 class ServiceSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
     class Meta:
         model = Service
         fields = [
@@ -16,8 +18,11 @@ class ServiceSerializer(serializers.ModelSerializer):
             "is_active",
             "created_at",
         ]
-        read_only_fields = [
-            "id",
-            "slug",
-            "created_at",
-        ]
+
+    def get_image(self, obj):
+        request = self.context.get("request")
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        if obj.image:
+            return obj.image.url
+        return None

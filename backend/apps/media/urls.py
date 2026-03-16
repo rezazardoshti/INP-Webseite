@@ -6,7 +6,6 @@ from .views import (
     GalleryDetailView,
 )
 
-
 urlpatterns = [
     path("galleries/", ActiveGalleryListView.as_view(), name="gallery-list"),
     path("galleries/create/", GalleryCreateView.as_view(), name="gallery-create"),
